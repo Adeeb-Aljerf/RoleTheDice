@@ -124,14 +124,67 @@ main {
 .btn--hold {
   top: 46.1rem;
 }
-
-.dice {
+.dice-container {
   position: absolute;
   left: 50%;
   top: 16.5rem;
   transform: translateX(-50%);
+  width: 10rem;
   height: 10rem;
-  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+  perspective: 1000px;
+}
+
+.dice {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(5rem);
+  background-image: url('dice-1.png');
+}
+.back {
+  transform: rotateY(180deg) translateZ(5rem);
+  background-image: url('dice-6.png');
+}
+.top {
+  transform: rotateX(90deg) translateZ(5rem);
+  background-image: url('dice-2.png');
+}
+.bottom {
+  transform: rotateX(-90deg) translateZ(5rem);
+  background-image: url('dice-5.png');
+}
+.right {
+  transform: rotateY(90deg) translateZ(5rem);
+  background-image: url('dice-3.png');
+}
+.left {
+  transform: rotateY(-90deg) translateZ(5rem);
+  background-image: url('dice-4.png');
+}
+
+@keyframes roll3D {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg);
+  }
 }
 
 .player--active {
@@ -146,7 +199,93 @@ main {
   font-weight: 700;
   color: #00a8e8;
 }
-
 .hidden {
   display: none;
+}
+
+.dice {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+@keyframes roll3D-1 {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  20% {
+    transform: rotateX(144deg) rotateY(72deg) rotateZ(36deg);
+  }
+  40% {
+    transform: rotateX(288deg) rotateY(144deg) rotateZ(72deg);
+  }
+  60% {
+    transform: rotateX(432deg) rotateY(216deg) rotateZ(108deg);
+  }
+  80% {
+    transform: rotateX(576deg) rotateY(288deg) rotateZ(144deg);
+  }
+  95% {
+    transform: rotateX(684deg) rotateY(342deg) rotateZ(171deg);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg);
+  }
+}
+
+@keyframes roll3D-2 {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  20% {
+    transform: rotateX(72deg) rotateY(144deg) rotateZ(108deg);
+  }
+  40% {
+    transform: rotateX(144deg) rotateY(288deg) rotateZ(216deg);
+  }
+  60% {
+    transform: rotateX(216deg) rotateY(432deg) rotateZ(324deg);
+  }
+  80% {
+    transform: rotateX(288deg) rotateY(576deg) rotateZ(432deg);
+  }
+  95% {
+    transform: rotateX(342deg) rotateY(684deg) rotateZ(513deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(720deg) rotateZ(540deg);
+  }
+}
+
+@keyframes roll3D-3 {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  20% {
+    transform: rotateX(108deg) rotateY(36deg) rotateZ(144deg);
+  }
+  40% {
+    transform: rotateX(216deg) rotateY(72deg) rotateZ(288deg);
+  }
+  60% {
+    transform: rotateX(324deg) rotateY(108deg) rotateZ(432deg);
+  }
+  80% {
+    transform: rotateX(432deg) rotateY(144deg) rotateZ(576deg);
+  }
+  95% {
+    transform: rotateX(513deg) rotateY(171deg) rotateZ(684deg);
+  }
+  100% {
+    transform: rotateX(540deg) rotateY(180deg) rotateZ(720deg);
+  }
+}
+.dice {
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.dice-rolling {
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  animation-fill-mode: forwards;
 }

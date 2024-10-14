@@ -45,28 +45,106 @@ dice.classList.add('hidden');
 
 //? when i click on roll dice
 
-diceRoll.addEventListener('click', function () {
-  if (!playing) removeEventListener('click', diceRoll);
-  if (playing) {
-    const diceValue = Math.trunc(Math.random() * 6) + 1;
+function getRandomAnimation(diceValue) {
+  const baseRotations = 3; // Minimum number of full rotations
+  const extraRotations = diceValue - 1; // Extra rotations based on dice value
 
-    dice.classList.remove('hidden');
-    dice.src = `dice-${diceValue}.png`;
+  const xRotation = (baseRotations + extraRotations) * 360;
+  const yRotation = (baseRotations + extraRotations) * 360;
+  const zRotation = (baseRotations + extraRotations) * 360;
+
+  return `
+@keyframes roll3D-${diceValue} {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  60% { transform: rotateX(${xRotation * 0.8}deg) rotateY(${
+    yRotation * 0.8
+  }deg) rotateZ(${zRotation * 0.8}deg); }
+  75% { transform: rotateX(${xRotation * 0.9}deg) rotateY(${
+    yRotation * 0.9
+  }deg) rotateZ(${zRotation * 0.9}deg); }
+  85% { transform: rotateX(${xRotation * 0.95}deg) rotateY(${
+    yRotation * 0.95
+  }deg) rotateZ(${zRotation * 0.95}deg); }
+  92% { transform: rotateX(${xRotation * 0.98}deg) rotateY(${
+    yRotation * 0.98
+  }deg) rotateZ(${zRotation * 0.98}deg); }
+  96% { transform: rotateX(${xRotation * 0.99}deg) rotateY(${
+    yRotation * 0.99
+  }deg) rotateZ(${zRotation * 0.99}deg); }
+  100% { transform: ${getFinalRotation(diceValue)}; }
+}
+  `;
+}
+function getFinalRotation(diceValue) {
+  switch (diceValue) {
+    case 1:
+      return 'rotateX(0deg) rotateY(0deg)';
+    case 2:
+      return 'rotateX(-90deg) rotateY(0deg)';
+    case 3:
+      return 'rotateY(-90deg)';
+    case 4:
+      return 'rotateY(90deg)';
+    case 5:
+      return 'rotateX(90deg) rotateY(0deg)';
+    case 6:
+      return 'rotateY(180deg)';
+  }
+}
+
+diceRoll.addEventListener('click', function () {
+  if (!playing) return;
+
+  const diceValue = Math.trunc(Math.random() * 6) + 1;
+
+  const randomAnimation = getRandomAnimation();
+
+  dice.classList.remove('hidden');
+
+  dice.classList.add('dice-rolling');
+  dice.style.animationName = randomAnimation;
+
+  setTimeout(() => {
+    dice.classList.remove('dice-rolling');
+    dice.style.animationName = '';
+
+    // Set the final rotation based on the dice value
+    switch (diceValue) {
+      case 1:
+        dice.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        break;
+      case 2:
+        dice.style.transform = 'rotateX(-90deg) rotateY(0deg)';
+        break;
+      case 3:
+        dice.style.transform = 'rotateY(-90deg)';
+        break;
+      case 4:
+        dice.style.transform = 'rotateY(90deg)';
+        break;
+      case 5:
+        dice.style.transform = 'rotateX(90deg) rotateY(0deg)';
+        break;
+      case 6:
+        dice.style.transform = 'rotateY(180deg)';
+        break;
+    }
 
     if (diceValue !== 1) {
-      //? putting the value of the dice for the right player
-
       currentValue += diceValue;
+
       document.getElementById(`current--${activePlayer}`).textContent =
         currentValue;
     } else {
-      // document.querySelector('.player--1').classList.add('player--active');
-      // document.querySelector('.player--0').classList.remove('player--active');
-
       switching();
     }
-  }
+  }, 1200); // Match this to your animation duration
 });
+
+function getRandomAnimation() {
+  const animations = ['roll3D-1', 'roll3D-2', 'roll3D-3'];
+  return animations[Math.floor(Math.random() * animations.length)];
+}
 
 //? when clicking on hold button
 
