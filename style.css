@@ -114,7 +114,7 @@ button:focus {
   font-size: 2.5rem;
   position: absolute;
   left: -1rem;
-  top: -0.5rem;
+  top: -0.8rem;
 }
 .player-inputs {
   display: flex;
@@ -621,7 +621,8 @@ button:focus {
   }
 
   .rules ul {
-    font-size: 1.3rem;
+    line-height: 2.1;
+    font-size: 1.6rem;
   }
 
   .player-inputs input {
