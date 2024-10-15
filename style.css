@@ -621,8 +621,10 @@ button:focus {
   }
 
   .rules ul {
-    line-height: 2.1;
     font-size: 1.6rem;
+  }
+  .rules ul li {
+    margin-bottom: 1.5rem;
   }
 
   .player-inputs input {
