@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -30,6 +31,10 @@ main {
   border-radius: 15px;
   overflow: hidden;
   display: flex;
+}
+
+button:focus {
+  outline: none;
 }
 /*? __________________________________popup__________________________________ */
 .popup {
@@ -526,6 +531,29 @@ main {
 
   .player-inputs input {
     width: 18rem;
+  }
+
+  .face {
+    border-radius: 10px;
+  }
+
+  .front {
+    transform: rotateY(0deg) translateZ(4.5rem);
+  }
+  .back {
+    transform: rotateY(180deg) translateZ(4.5rem);
+  }
+  .top {
+    transform: rotateX(90deg) translateZ(4.5rem);
+  }
+  .bottom {
+    transform: rotateX(-90deg) translateZ(4.5rem);
+  }
+  .right {
+    transform: rotateY(90deg) translateZ(4.5rem);
+  }
+  .left {
+    transform: rotateY(-90deg) translateZ(4.5rem);
   }
 }
 @media screen and (max-width: 46.875em) {

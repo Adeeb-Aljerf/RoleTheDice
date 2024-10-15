@@ -29,6 +29,7 @@ let score = [0, 0];
 let activePlayer = 0;
 let currentValue = 0;
 let playing = true;
+let isRolling = false;
 
 startGameBtn.addEventListener('click', () => {
   const player1Name = player1Input.value.trim();
@@ -151,8 +152,8 @@ startGameBtn.addEventListener('click', () => {
   // ... existing code to start the game ...
 });
 diceRoll.addEventListener('click', function () {
-  if (!playing) return;
-
+  if (!playing || isRolling) return;
+  isRolling = true;
   const diceValue = Math.trunc(Math.random() * 6) + 1;
 
   const randomAnimation = getRandomAnimation();
@@ -202,6 +203,7 @@ diceRoll.addEventListener('click', function () {
       }
       switching();
     }
+    isRolling = false;
   }, 1200); //? Match this to your animation duration
 });
 function getRandomAnimation() {
@@ -214,7 +216,7 @@ function getRandomAnimation() {
 const hold = document
   .querySelector('.btn--hold')
   .addEventListener('click', function () {
-    if (!playing) removeEventListener('click', hold);
+    if (!playing || isRolling) return;
     if (playing) {
       //activePlayer===0 ? score[0]+=currentValue : score[1]+=currentValue;
 
@@ -222,7 +224,7 @@ const hold = document
       document.querySelector(`#score--${activePlayer}`).textContent =
         score[activePlayer];
 
-      if (score[activePlayer] >= 10) {
+      if (score[activePlayer] >= 50) {
         console.log(`${activePlayer + 1} win`);
 
         document
@@ -251,8 +253,6 @@ const reset = document
     activePlayer = 0;
     playing = true;
     dice.classList.add('hidden');
-    addEventListener('click', diceRoll);
-    addEventListener('click', hold);
 
     //? make the score 0
     score = [0, 0];
