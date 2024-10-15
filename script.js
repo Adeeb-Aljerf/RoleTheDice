@@ -204,7 +204,7 @@ diceRoll.addEventListener('click', function () {
       switching();
     }
     isRolling = false;
-  }, 2000); //? Match this to your animation duration
+  }, 1200); //? Match this to your animation duration
 });
 function getRandomAnimation() {
   const animations = ['roll3D-1', 'roll3D-2', 'roll3D-3'];
