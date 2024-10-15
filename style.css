@@ -31,6 +31,167 @@ main {
   overflow: hidden;
   display: flex;
 }
+/*? __________________________________popup__________________________________ */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 0.7s ease, backdrop-filter 2s ease;
+  opacity: 1;
+  z-index: 1000;
+}
+.popup-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  max-height: 80vh;
+  overflow: hidden;
+}
+.selection-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+}
+.popup h2 {
+  color: #0056b3;
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.rules {
+  margin-bottom: 2rem;
+  font-weight: 600;
+  background: rgba(0, 86, 179, 0.1);
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 168, 232, 0.3);
+  box-shadow: 0 0 20px rgba(0, 168, 232, 0.1);
+}
+
+.rules h3 {
+  font-size: 2.2rem;
+  color: #00a8e8;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rules ul {
+  padding-left: 2.5rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  list-style-type: none;
+}
+
+.rules ul li {
+  position: relative;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.rules ul li::before {
+  content: '•';
+  color: #00a8e8;
+  font-size: 2.5rem;
+  position: absolute;
+  left: -1rem;
+  top: -0.5rem;
+}
+.player-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.player-inputs input {
+  padding: 0.8rem;
+  width: 20rem;
+  font-size: 1.6rem;
+  border: 2px solid #00a8e8;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s;
+}
+
+.player-inputs input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
+  background-color: #fff;
+}
+
+#startGame {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border-radius: 5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: block;
+  margin: 0 auto;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+#startGame:hover {
+  background-color: #00a8e8;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#startGame:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.difficulty-selection {
+  margin-bottom: 2rem;
+}
+
+.difficulty-selection h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00a8e8;
+}
+
+.difficulty-toggle {
+  display: flex;
+
+  border: 2px solid #0056b3;
+  border-radius: 50px;
+  overflow: hidden;
+  width: fit-content;
+  margin: 0 auto;
+}
+.difficulty-option {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.6rem;
+  background-color: transparent;
+  color: #0056b3;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.difficulty-option.active {
+  background-color: #0056b3;
+  color: #fff;
+} /*? __________________________________Main__________________________________ */
 
 .player {
   flex: 1;
@@ -57,7 +218,12 @@ main {
   font-weight: 600;
   color: #0056b3;
 }
-
+.rounds-won {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #0056b3;
+  margin-top: 1rem;
+}
 .current {
   background-color: #0056b3;
   opacity: 0.8;
@@ -131,7 +297,6 @@ main {
   transform: translateX(-50%);
   width: 10rem;
   height: 10rem;
-  perspective: 1000px;
 }
 
 .dice {
@@ -288,4 +453,176 @@ main {
   animation-duration: 1.2s;
   animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   animation-fill-mode: forwards;
+}
+
+/*?________________________________MEDIA QUERIES________________________________*/
+
+@media screen and (max-width: 65em) {
+  html {
+    font-size: 50%;
+  }
+
+  main {
+    width: 90rem;
+    height: 55rem;
+  }
+
+  .player {
+    padding: 2rem;
+  }
+
+  .name {
+    font-size: 3.5rem;
+  }
+
+  .score {
+    font-size: 7rem;
+  }
+
+  .current {
+    width: 70%;
+    padding: 1.5rem;
+  }
+
+  .current-label {
+    font-size: 1.5rem;
+  }
+
+  .current-score {
+    font-size: 3rem;
+  }
+
+  .btn {
+    font-size: 1.6rem;
+    padding: 0.8rem 2.5rem;
+  }
+
+  .btn--new {
+    top: 3rem;
+  }
+
+  .btn--roll {
+    top: 36rem;
+  }
+
+  .btn--hold {
+    top: 42rem;
+  }
+
+  .dice-container {
+    top: 15rem;
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .popup-content {
+    width: 95%;
+    max-width: 550px;
+  }
+
+  .rules ul {
+    font-size: 1.4rem;
+  }
+
+  .player-inputs input {
+    width: 18rem;
+  }
+}
+@media screen and (max-width: 46.875em) {
+  html {
+    font-size: 45%;
+  }
+
+  main {
+    width: 95%;
+    height: 55rem;
+  }
+
+  .player {
+    padding: 1.5rem;
+  }
+
+  .name {
+    font-size: 3rem;
+  }
+
+  .score {
+    font-size: 6rem;
+  }
+
+  .current {
+    width: 50%;
+    padding: 1.5rem;
+  }
+
+  .current-label {
+    font-size: 1.4rem;
+  }
+
+  .current-score {
+    font-size: 2.8rem;
+  }
+
+  .btn {
+    font-size: 1.4rem;
+    padding: 0.7rem 1.4rem;
+  }
+
+  .btn--new {
+    top: 2.5rem;
+  }
+
+  .btn--roll {
+    top: 34rem;
+  }
+
+  .btn--hold {
+    top: 40rem;
+  }
+
+  .dice-container {
+    top: 14rem;
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .popup-content {
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+  }
+
+  .rules ul {
+    font-size: 1.3rem;
+  }
+
+  .player-inputs input {
+    width: 16rem;
+  }
+
+  .selection-container {
+    gap: 3rem;
+  }
+  .face {
+    border-radius: 10px;
+  }
+
+  .front {
+    transform: rotateY(0deg) translateZ(3.5rem);
+  }
+  .back {
+    transform: rotateY(180deg) translateZ(3.5rem);
+  }
+  .top {
+    transform: rotateX(90deg) translateZ(3.5rem);
+  }
+  .bottom {
+    transform: rotateX(-90deg) translateZ(3.5rem);
+  }
+  .right {
+    transform: rotateY(90deg) translateZ(3.5rem);
+  }
+  .left {
+    transform: rotateY(-90deg) translateZ(3.5rem);
+  }
 }

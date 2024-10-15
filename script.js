@@ -17,11 +17,44 @@ const current1 = document.getElementById('current--1');
 const player0 = document.querySelector('.player--0');
 const player1 = document.querySelector('.player--1');
 
+const popup = document.getElementById('popup');
+const startGameBtn = document.getElementById('startGame');
+const player1Input = document.getElementById('player1');
+const player2Input = document.getElementById('player2');
+
+const rollOneRule = document.getElementById('roll-one-rule');
+const difficultyOptions = document.querySelectorAll('.difficulty-option');
+
 let score = [0, 0];
 let activePlayer = 0;
 let currentValue = 0;
 let playing = true;
 
+startGameBtn.addEventListener('click', () => {
+  const player1Name = player1Input.value.trim();
+  const player2Name = player2Input.value.trim();
+
+  if (!player1Name || !player2Name) {
+    alert('Please enter names for both players!');
+    return;
+  }
+
+  document.getElementById('name--0').textContent = player1Name;
+  document.getElementById('name--1').textContent = player2Name;
+
+  popup.style.opacity = '0';
+  popup.style.backdropFilter = 'blur(0px)';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 2000);
+
+  // Reset the game here if needed
+});
+//? Show the popup when the page loads
+window.addEventListener('load', () => {
+  popup.style.display = 'flex';
+});
 //? build a function for switch to the active player (when 1 is elected or when hold)
 
 const switching = function () {
@@ -92,6 +125,31 @@ function getFinalRotation(diceValue) {
   }
 }
 
+difficultyOptions.forEach(option => {
+  option.addEventListener('click', () => {
+    difficultyOptions.forEach(o => o.classList.remove('active'));
+    option.classList.add('active');
+
+    if (option.dataset.difficulty === 'hard') {
+      rollOneRule.textContent =
+        "If a player rolls a 1, they lose both current score and their full score the next player's turn ";
+    } else {
+      rollOneRule.textContent =
+        "If a player rolls a 1, they lose their current score and then it's the next player's turn";
+    }
+  });
+});
+let isHardMode = false;
+
+startGameBtn.addEventListener('click', () => {
+  // ... existing player name validation ...
+
+  isHardMode =
+    document.querySelector('.difficulty-option.active').dataset.difficulty ===
+    'hard';
+
+  // ... existing code to start the game ...
+});
 diceRoll.addEventListener('click', function () {
   if (!playing) return;
 
@@ -108,7 +166,7 @@ diceRoll.addEventListener('click', function () {
     dice.classList.remove('dice-rolling');
     dice.style.animationName = '';
 
-    // Set the final rotation based on the dice value
+    //? Set the final rotation based on the dice value
     switch (diceValue) {
       case 1:
         dice.style.transform = 'rotateX(0deg) rotateY(0deg)';
@@ -136,11 +194,16 @@ diceRoll.addEventListener('click', function () {
       document.getElementById(`current--${activePlayer}`).textContent =
         currentValue;
     } else {
+      if (isHardMode) {
+        //? In hard mode, reset both current and total score
+        currentValue = 0;
+        score[activePlayer] = 0;
+        document.getElementById(`score--${activePlayer}`).textContent = 0;
+      }
       switching();
     }
-  }, 1200); // Match this to your animation duration
+  }, 1200); //? Match this to your animation duration
 });
-
 function getRandomAnimation() {
   const animations = ['roll3D-1', 'roll3D-2', 'roll3D-3'];
   return animations[Math.floor(Math.random() * animations.length)];
@@ -205,3 +268,17 @@ const reset = document
     player0.classList.add('player--active');
     player1.classList.remove('player--active');
   });
+
+player1Input.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    player2Input.focus();
+  }
+});
+
+player2Input.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    startGameBtn.click();
+  }
+});
